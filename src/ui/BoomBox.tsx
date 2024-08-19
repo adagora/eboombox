@@ -89,7 +89,7 @@ export default function BoomBox() {
               if (!blockWithTxns) return;
               navigator.clipboard.writeText(
                 process.env.NEXT_PUBLIC_SELF_URL +
-                  "/track/" +
+                  "/" +
                   blockWithTxns.data.hash +
                   "?start=" +
                   startTxn

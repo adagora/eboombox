@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import BoomBox from "../ui/BoomBox";
+import dynamic from "next/dynamic";
 import { CacheProvider } from "@emotion/react";
 import { globalStyles } from "../utils/styles";
 import createCache from "@emotion/cache";
@@ -11,6 +11,8 @@ import {
   QueryClient
 } from "@tanstack/react-query";
 import useBlocks, { BlocksContext } from "../lib/useBlocks";
+
+const BoomBox = dynamic(() => import("../ui/BoomBox"), { ssr: false });
 
 const cache = createCache({ key: "next" });
 

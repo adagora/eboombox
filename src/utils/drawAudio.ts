@@ -2,15 +2,23 @@
 
 import { colors } from "./styles";
 
-// @ts-ignore:next-line
-window.AudioContext = window.AudioContext || window.webkitAudioContext;
-const audioContext = new AudioContext();
+if (typeof window !== "undefined") {
+  // @ts-ignore:next-line
+  window.AudioContext = window.AudioContext || window.webkitAudioContext;
+}
+
+const audioContext = typeof window !== "undefined" ? new AudioContext() : null;
 
 const canvasToBase64 = (canvas: HTMLCanvasElement): string => {
   return canvas.toDataURL("image/png").split(",")[1];
 };
 
 const drawAudio = (blob: Blob, setBase64Image: (base64: string) => void) => {
+  if (!audioContext) {
+    console.error("AudioContext is not available");
+    return;
+  }
+
   blob
     .arrayBuffer()
     .then((arrayBuffer) => audioContext.decodeAudioData(arrayBuffer))
