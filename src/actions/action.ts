@@ -83,8 +83,6 @@ export const handleMint = async (
         body: JSON.stringify(uploadBody)
       }
     );
-    console.log("uploadBody", uploadBody);
-    console.log("uploadNFTResponse", uploadNFTResponse);
 
     if (!uploadNFTResponse.ok) {
       const errorResponse = await uploadNFTResponse.json();
@@ -105,7 +103,6 @@ export const handleMint = async (
         }
       }
     );
-    console.log("MintAndSendSpecificResponse", MintAndSendSpecificResponse);
 
     if (!MintAndSendSpecificResponse.ok) {
       const errorResponse = await MintAndSendSpecificResponse.json();
