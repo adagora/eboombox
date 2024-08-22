@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useTransition } from "react";
+import React, { useEffect, useTransition } from "react";
 import { BsPauseCircleFill, BsPlayCircleFill } from "react-icons/bs";
 import { CgPlayTrackNextO, CgPlayTrackPrevO } from "react-icons/cg";
 import styled from "@emotion/styled";
@@ -42,7 +42,7 @@ export default function MediaPlayer({
   blob: Blob;
   previousTrack: (() => void) | undefined;
   nextTrack: (() => void) | undefined;
-  blockWithTxns: BlockSummary | null;
+  blockWithTxns: BlockSummary;
   startTxn: number;
 }) {
   const [isMintPending, startMintTransition] = useTransition();
@@ -93,13 +93,17 @@ export default function MediaPlayer({
                   isConnected,
                   blockWithTxns,
                   fileName,
+                  startTxn,
                   base64Image,
                   usedAddresses[0],
                   shareFileData?.data.baseShareableLink!
                 );
+
                 toast.dark(mint.message, {
                   position: "top-left"
                 });
+
+                fileName = "";
               });
             }}
             aria-disabled={isMintPending}

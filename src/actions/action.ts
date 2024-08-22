@@ -8,12 +8,12 @@ import {
 } from "../services/@types/nft";
 import { API_KEY_NMKR, API_URL_NMKR } from "../lib/api";
 import { NMKR_PROJECT_UID } from "../lib/mintingUtils";
-import { truncateHash } from "../ui/BoomBox";
 
 export const handleMint = async (
   isConnected: boolean,
   blockWithTxns: BlockSummary | null,
   fileName: string,
+  startTxn: number,
   base64Image: string,
   usedAddress: string,
   baseShareableLink?: string
@@ -47,6 +47,7 @@ export const handleMint = async (
   const receiveraddress = usedAddress;
   const priceInLovelace = 4500000;
   const description = "musically presented block range";
+  const urlPath = `${blockWithTxns.data.hash}?start=${startTxn}`;
   //name need to be unique
   const name = `eboombox${blockWithTxns.data.height}`;
 
@@ -65,6 +66,12 @@ export const handleMint = async (
             mimetype: "audio/mp3",
             fileFromsUrl: baseShareableLink || ""
           }
+        }
+      ],
+      metadataPlaceholder: [
+        {
+          name: "link to website",
+          value: `${process.env.NEXT_PUBLIC_SELF_URL}/${urlPath}`
         }
       ],
       priceInLovelace: priceInLovelace,
