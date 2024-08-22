@@ -16,7 +16,8 @@ export function useShareFile(
       });
 
       if (!response.ok) {
-        throw new Error(`Error: ${response.statusText}`);
+        const errorResponse = await response.json();
+        throw new Error(`${errorResponse.errorMessage}`);
       }
 
       return response.json();

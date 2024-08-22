@@ -9,8 +9,8 @@ interface TooltipProps {
 }
 
 const TooltipWrapper = styled.div`
-  //   position: relative;
-  //   display: inline-block;
+  // position: relative;
+  // display: inline-block;
 `;
 
 const TooltipContent = styled.div<{ position: string }>`

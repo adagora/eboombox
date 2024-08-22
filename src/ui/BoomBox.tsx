@@ -58,7 +58,6 @@ export default function BoomBox() {
     blockWithTxns?.data?.block_producer!
   );
 
-  console.log({ stakePoolInformationData });
   const [blob, setBlob] = useState<Blob>();
   const [isInfoOpen, setIsInfoOpen] = useState(false);
 
@@ -264,7 +263,7 @@ const InfoButton = styled.button`
   background: ${colors.blue};
   border: none;
   color: white;
-  padding: 8px 16px;
+  padding: 4px 4px;
   border-radius: 20px;
   font-size: 16px;
   cursor: pointer;

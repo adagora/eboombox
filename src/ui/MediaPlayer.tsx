@@ -49,7 +49,8 @@ export default function MediaPlayer({
   const { data: filteredfileByfileNameData } = useFilterFiles(
     fileName,
     "public",
-    "index"
+    "index",
+    !!fileName && isMintPending
   );
 
   const { data: shareFileData } = useShareFile(
@@ -66,7 +67,7 @@ export default function MediaPlayer({
   } = useMediaPlayer(blob);
 
   const network =
-    process.env.NODE_ENV === "development"
+    process.env.NEXT_PUBLIC_NODE_ENV === "development"
       ? NetworkType.TESTNET
       : NetworkType.MAINNET;
   const { isConnected, usedAddresses } = useCardano({
@@ -83,7 +84,7 @@ export default function MediaPlayer({
         <span>{duration || "--:--"}</span>
       </Duration>
       <Controls>
-        <Tooltip content="Miniting NFT, to mint you should: 1. Download file on local machine, 2. upload downloaded file to iagon cloud">
+        <Tooltip content="Miniting NFT, to mint you should: 1. Download file on local machine, 2. [optional] upload downloaded file to iagon cloud">
           <StyledMintButton
             onClick={() => {
               let mint: { message: string };

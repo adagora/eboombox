@@ -1,5 +1,5 @@
 export interface UploadNFTRequest {
-  tokenname: string;
+  tokenname: any;
   displayname: string;
   description: string;
   previewImageNft: {
@@ -12,12 +12,12 @@ export interface UploadNFTRequest {
     {
       subfile: {
         mimetype: string;
-        fileFromBase64: string;
-        fileFromsUrl: string;
-        fileFromIPFS: string;
+        fileFromBase64?: string;
+        fileFromsUrl?: string;
+        fileFromIPFS?: string;
       };
-      description: string;
-      metadataPlaceholder: [
+      description?: string;
+      metadataPlaceholder?: [
         {
           name: string;
           value: string;

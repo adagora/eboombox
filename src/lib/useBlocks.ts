@@ -53,9 +53,6 @@ export default function useBlocks(initialBlocks?: string) {
     }
   }, [latestBlockData]);
 
-  console.log("blocks", blocks);
-  console.log("blocks Length", blocks.length);
-
   const currentBlock = useMemo(() => {
     return blockId ? blocks.find((block) => block.data.hash === blockId) : null;
   }, [blocks, blockId]);

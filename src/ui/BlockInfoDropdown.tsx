@@ -22,7 +22,7 @@ export default function BlockInfoSideMenu({
   if (!isOpen || !blockInfo) return null;
 
   return (
-    <SideMenuContainer isOpen={isOpen}>
+    <SideMenuContainer>
       <Header>
         <h2>Block Information</h2>
         <CloseButton onClick={onClose}>
@@ -70,7 +70,7 @@ export default function BlockInfoSideMenu({
   );
 }
 
-const SideMenuContainer = styled.div<{ isOpen: boolean }>`
+const SideMenuContainer = styled.div`
   position: fixed;
   top: 0;
   right: 0;
@@ -80,7 +80,6 @@ const SideMenuContainer = styled.div<{ isOpen: boolean }>`
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
   z-index: 1000;
   transition: transform 0.3s ease-in-out;
-  transform: translateX(${(props) => (props.isOpen ? "0" : "100%")});
 `;
 
 const Header = styled.div`

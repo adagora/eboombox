@@ -9,7 +9,7 @@ import styled from "styled-components";
 import { colors } from "../utils/styles";
 
 export default function FileUploadComponent() {
-  const { mutate: uploadFile, isPending, error, data } = useUploadFile();
+  const { mutate: uploadFile, isPending, error } = useUploadFile();
 
   useEffect(() => {
     if (error) {
@@ -54,7 +54,6 @@ export default function FileUploadComponent() {
         style={{ display: "none" }}
       />
       {isPending ? <p>Uploading...</p> : null}
-      {/* {error ? toast.error(`${error?.message}`, { toastId: "" }) : null} */}
     </div>
   );
 }

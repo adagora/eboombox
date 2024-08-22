@@ -5,7 +5,8 @@ import { FilterfilesResponse } from "./@types/storage";
 export function useFilterFiles(
   query: string,
   visibility: string,
-  listingType: string
+  listingType: string,
+  enabled?: boolean
 ): UseQueryResult<FilterfilesResponse, Error> {
   return useQuery<FilterfilesResponse, Error>({
     queryKey: ["filterFiles", query, visibility, listingType],
@@ -26,6 +27,6 @@ export function useFilterFiles(
 
       return response.json();
     },
-    enabled: !!query
+    enabled: enabled
   });
 }

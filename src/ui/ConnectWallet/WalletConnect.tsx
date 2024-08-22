@@ -6,17 +6,11 @@ import WalletModal from "./WalletModal";
 
 export default function WalletConnect() {
   const network =
-    process.env.NODE_ENV === "development"
+    process.env.NEXT_PUBLIC_NODE_ENV === "development"
       ? NetworkType.TESTNET
       : NetworkType.MAINNET;
   const { isConnected, stakeAddress, disconnect, accountBalance } = useCardano({
     limitNetwork: network
-  });
-  console.log({
-    isConnected,
-    stakeAddress,
-    disconnect,
-    accountBalance
   });
 
   return (

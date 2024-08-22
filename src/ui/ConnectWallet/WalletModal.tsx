@@ -6,6 +6,7 @@ import { useCardano } from "@cardano-foundation/cardano-connect-with-wallet";
 import { NetworkType } from "@cardano-foundation/cardano-connect-with-wallet-core";
 import Image from "next/image";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 declare global {
   interface Window {
@@ -18,12 +19,16 @@ export default function WalletModal() {
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
 
   const network =
-    process.env.NODE_ENV === "development"
+    process.env.NEXT_PUBLIC_NODE_ENV === "development"
       ? NetworkType.TESTNET
       : NetworkType.MAINNET;
   const { isConnected, connect, installedExtensions } = useCardano({
     limitNetwork: network
   });
+
+  const onError = (code: Error) => {
+    return toast.error(code.message);
+  };
 
   return (
     <div>
@@ -37,7 +42,9 @@ export default function WalletModal() {
               {installedExtensions && installedExtensions.length > 0 ? (
                 installedExtensions.map((provider: string) => (
                   <FlexDiv key={provider}>
-                    <Button onClick={() => connect(provider)}>
+                    <Button
+                      onClick={() => connect(provider, undefined, onError)}
+                    >
                       {provider.toUpperCase()}
                     </Button>
                     <span>

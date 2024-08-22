@@ -7,6 +7,8 @@ import {
   UploadNFTResponse
 } from "../services/@types/nft";
 import { API_KEY_NMKR, API_URL_NMKR } from "../lib/api";
+import { NMKR_PROJECT_UID } from "../lib/mintingUtils";
+import { truncateHash } from "../ui/BoomBox";
 
 export const handleMint = async (
   isConnected: boolean,
@@ -34,27 +36,38 @@ export const handleMint = async (
     };
   }
 
-  if (!baseShareableLink) {
-    return {
-      message: "Please first upload downloaded *.mp3 to IAGON cloud service"
-    };
-  }
+  // if (!baseShareableLink) {
+  //   return {
+  //     message: "Please first upload downloaded *.mp3 to IAGON cloud service"
+  //   };
+  // }
 
-  const projectuid = "5cd36d4b-02eb-46b2-a38b-dd6d680148dc";
+  const projectuid = NMKR_PROJECT_UID;
   const tokencount = 1;
   const receiveraddress = usedAddress;
+  const priceInLovelace = 4500000;
+  const description = "musically presented block range";
+  //name need to be unique
+  const name = `eboombox${blockWithTxns.data.height}`;
 
   try {
     const uploadBody: UploadNFTRequest = {
-      tokenname: fileName,
+      tokenname: name,
       displayname: fileName,
-      description: "musically presented block range",
+      description: description,
       previewImageNft: {
         mimetype: "image/jpeg",
-        fileFromBase64: base64Image,
-        fileFromsUrl: baseShareableLink
+        fileFromBase64: base64Image
       },
-      priceInLovelace: 4500000,
+      subfiles: [
+        {
+          subfile: {
+            mimetype: "audio/mp3",
+            fileFromsUrl: baseShareableLink || ""
+          }
+        }
+      ],
+      priceInLovelace: priceInLovelace,
       isBlocked: false
     };
 
@@ -74,7 +87,8 @@ export const handleMint = async (
     console.log("uploadNFTResponse", uploadNFTResponse);
 
     if (!uploadNFTResponse.ok) {
-      return { message: "Minting Failed" };
+      const errorResponse = await uploadNFTResponse.json();
+      return { message: `Failed to upload NFT: ${errorResponse.errorMessage}` };
     }
 
     const uploadResult: UploadNFTResponse = await uploadNFTResponse.json();
@@ -91,9 +105,12 @@ export const handleMint = async (
         }
       }
     );
+    console.log("MintAndSendSpecificResponse", MintAndSendSpecificResponse);
 
     if (!MintAndSendSpecificResponse.ok) {
-      return { message: "Minting Failed" };
+      const errorResponse = await MintAndSendSpecificResponse.json();
+
+      return { message: `Failed to mint NFT ${errorResponse.errorMessage}` };
     }
 
     const mintResult: MintAndSendResponse =
